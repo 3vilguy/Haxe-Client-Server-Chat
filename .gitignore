@@ -1,0 +1,11 @@
+# IDE
+*.hxproj
+*.iml
+.idea
+
+# Haxe
+.haxelib
+.temp
+bin
+build
+out
