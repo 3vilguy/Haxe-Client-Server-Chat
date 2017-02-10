@@ -1,0 +1,12 @@
+-cp src
+
+-neko bin/server.n
+-main Server.hx
+
+
+--next
+
+-cp src
+
+-neko bin/client.n
+-main Client.hx
