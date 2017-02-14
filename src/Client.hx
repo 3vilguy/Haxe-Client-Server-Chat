@@ -1,25 +1,24 @@
 package;
 
+import neko.Lib;
 import sys.net.Host;
 import sys.net.Socket;
 
 class Client
 {
-	static function main() 
+	public static function main()
 	{
-		var s:Socket = new Socket();
-		s.connect(new Host("localhost"), 5000);
-		
-		while ( true )
-		{
-			var l = s.input.readLine();
-			trace(l);
-			
-			if ( l == "exit" )
-			{
-				s.close();
-				break;
-			}
-		}
+		Lib.println("opening connection");
+		var sock = new Socket();
+		sock.connect(new Host("localhost"), 1234);
+
+		Lib.println("sending messages");
+		sock.write("this is a test.");            Sys.sleep(1);
+		sock.write("this is another test.");      Sys.sleep(1);
+		sock.write("this is a third test.");      Sys.sleep(1);
+		sock.write("this is the last test.");
+
+		sock.close();
+		Lib.println("client done");
 	}
 }
