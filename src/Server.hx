@@ -7,6 +7,7 @@ import sys.net.Socket;
 
 typedef Client = {
 	var id : Int;
+	var socket : Socket;
 }
 
 typedef Message = {
@@ -46,7 +47,7 @@ class Server extends ThreadServer<Client, Message>
 	{
 		var num = Std.random(100);
 		Lib.println("client " + num + " is " + s.peer());
-		var client:Client = { id: num };
+		var client:Client = { id: num, socket : s };
 		_clients.push(client);
 		return client;
 	}
