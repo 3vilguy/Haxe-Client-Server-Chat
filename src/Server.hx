@@ -21,6 +21,13 @@ class Server extends ThreadServer<Client, Message>
 		server.run("localhost", 1234);
 	}
 	
+	override function init() {
+		super.init();
+		Lib.println("ษออออออออออออออออป");
+		Lib.println("บ SERVER STARTED บ");
+		Lib.println("ศออออออออออออออออผ");
+	}
+	
 	// create a Client
 	override function clientConnected( s : Socket ) : Client
 	{
