@@ -15,10 +15,21 @@ typedef Message = {
 
 class Server extends ThreadServer<Client, Message>
 {
+	private static var HOST : String = "localhost";
+	private static var PORT : Int = 1234;
+
 	public static function main()
 	{
 		var server = new Server();
-		server.run("localhost", 1234);
+		try
+		{
+			server.run(HOST, PORT);
+		}
+		catch (err:Dynamic)
+		{
+			Lib.println("Something went wrong:");
+			Lib.println(err);
+		}
 	}
 	
 	override function init() {
