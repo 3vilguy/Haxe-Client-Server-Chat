@@ -1,5 +1,6 @@
 package;
 
+import haxe.Timer;
 import haxe.io.Bytes;
 import neko.Lib;
 import neko.net.ThreadServer;
@@ -81,5 +82,16 @@ class Server extends ThreadServer<Client, Message>
 	override function clientMessage( c : Client, msg : Message )
 	{
 		Lib.println(c.id + " sent: " + msg.str);
+	}
+	
+	
+	override public function update()
+	{
+		var stamp:Float = Timer.stamp();
+		Lib.println("Update! " + stamp);
+		for (client in _clients)
+		{
+			sendData(client.socket, stamp + "\n");
+		}
 	}
 }
