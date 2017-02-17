@@ -1,9 +1,9 @@
 package;
 
-import neko.Lib;
-import sys.net.Socket;
-import neko.net.ThreadServer;
 import haxe.io.Bytes;
+import neko.Lib;
+import neko.net.ThreadServer;
+import sys.net.Socket;
 
 typedef Client = {
 	var id : Int;
@@ -17,6 +17,8 @@ class Server extends ThreadServer<Client, Message>
 {
 	private static var HOST : String = "localhost";
 	private static var PORT : Int = 1234;
+	
+	private var _clients:Array<Client> = [];
 
 	public static function main()
 	{
@@ -44,12 +46,15 @@ class Server extends ThreadServer<Client, Message>
 	{
 		var num = Std.random(100);
 		Lib.println("client " + num + " is " + s.peer());
-		return { id: num };
+		var client:Client = { id: num };
+		_clients.push(client);
+		return client;
 	}
 
 	override function clientDisconnected( c : Client )
 	{
 		Lib.println("client " + Std.string(c.id) + " disconnected");
+		_clients.remove(c);
 	}
 
 	override function readClientMessage( c : Client, buf : haxe.io.Bytes, pos : Int, len : Int ) : { msg : Message, bytes : Int }
