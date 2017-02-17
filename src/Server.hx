@@ -34,15 +34,15 @@ class Server extends ThreadServer<Client, Message>
 		Lib.println("client " + Std.string(c.id) + " disconnected");
 	}
 
-	override function readClientMessage(c:Client, buf:Bytes, pos:Int, len:Int)
+	override function readClientMessage( c : Client, buf : haxe.io.Bytes, pos : Int, len : Int ) : { msg : Message, bytes : Int }
 	{
 		// find out if there's a full message, and if so, how long it is.
 		var complete = false;
 		var cpos = pos;
 		while (cpos < (pos+len) && !complete)
 		{
-			//check for a period/full stop (i.e.:  "." ) to signify a complete message 
-			complete = (buf.get(cpos) == 46);
+			//check for a ENTER to signify a complete message
+			complete = (buf.get(cpos) == 10 || buf.get(cpos) == 13);
 			cpos++;
 		}
 
@@ -50,7 +50,7 @@ class Server extends ThreadServer<Client, Message>
 		if( !complete ) return null;
 
 		// got a full message, return it
-		var msg:String = buf.getString(pos, cpos - pos);
+		var msg:String = buf.getString(pos, cpos - 1 - pos);	// -1 so we can skip \n
 		return {msg: {str: msg}, bytes: cpos-pos};
 	}
 

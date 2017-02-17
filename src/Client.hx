@@ -9,14 +9,16 @@ class Client
 	public static function main()
 	{
 		Lib.println("opening connection");
-		var sock = new Socket();
+		var sock:Socket = new Socket();
 		sock.connect(new Host("localhost"), 1234);
+		
+		var cin = Sys.stdin();
 
-		Lib.println("sending messages");
-		sock.write("this is a test.");            Sys.sleep(1);
-		sock.write("this is another test.");      Sys.sleep(1);
-		sock.write("this is a third test.");      Sys.sleep(1);
-		sock.write("this is the last test.");
+		while (true)
+		{
+			sock.write(cin.readLine() + "\n");
+			Sys.sleep(0.1);
+		}
 
 		sock.close();
 		Lib.println("client done");
