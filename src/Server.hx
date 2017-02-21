@@ -89,6 +89,17 @@ class Server extends ThreadServer<Client, Message>
 
 	override function clientMessage( c : Client, msg : Message )
 	{
-		Lib.println('<${c.id}>${msg.str}');
+		var message:String = '<${c.id}>${msg.str}';
+		Lib.println(message);
+		sendToClients(message);
+	}
+	
+	
+	private function sendToClients( msg : String )
+	{
+		for (client in _clients)
+		{
+			sendData(client.socket, msg + "\n");
+		}
 	}
 }
