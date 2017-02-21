@@ -24,11 +24,14 @@ class Client
 
 		Lib.println("Connecting...");
 		var socket:Socket;
-		try {
+		try
+		{
 			socket = new Socket();
 			socket.connect(new Host(ip), PORT);
 			Lib.println('Connected to $ip:$PORT');
-		} catch (z:Dynamic) {
+		}
+		catch (z:Dynamic)
+		{
 			Lib.println('Could not connect to $ip:$PORT');
 			return;
 		}
