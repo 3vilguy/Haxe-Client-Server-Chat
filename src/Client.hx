@@ -70,6 +70,7 @@ class Client
 				Lib.println(text);
 			} catch (z:Dynamic) {
 				Lib.println('Connection lost.');
+				Sys.exit(0);
 				return;
 			}
 		}
