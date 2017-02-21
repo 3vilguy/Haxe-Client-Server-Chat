@@ -40,6 +40,10 @@ class Client
 			{
 				break;
 			}
+			else if (msg == "")
+			{
+				// Do nothing :V
+			}
 			else
 			{
 				socket.write(msg + "\n");
