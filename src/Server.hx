@@ -91,15 +91,17 @@ class Server extends ThreadServer<Client, Message>
 	{
 		var message:String = '<${c.id}>${msg.str}';
 		Lib.println(message);
-		sendToClients(message);
+		sendToClients(message, c.id);
 	}
 	
 	
-	private function sendToClients( msg : String )
+	private function sendToClients( msg : String, ?skip : Int = -1)
 	{
 		for (client in _clients)
 		{
-			sendData(client.socket, msg + "\n");
+			if (client.id != skip) {
+				sendData(client.socket, msg + "\n");
+			}
 		}
 	}
 }
