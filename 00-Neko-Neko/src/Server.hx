@@ -22,7 +22,7 @@ typedef Message = {
 
 class Server extends ThreadServer<Client, Message>
 {
-	private static var HOST : String = "localhost";
+	private static var HOST : String = "127.0.0.1";
 	private static var PORT : Int = 1234;
 
 	private var _clientID : Int = 0;
