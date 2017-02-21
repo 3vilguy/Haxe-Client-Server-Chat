@@ -8,16 +8,29 @@ class Client
 {
 	public static function main()
 	{
-		Lib.println("opening connection");
-		var sock:Socket = new Socket();
-		sock.connect(new Host("localhost"), 1234);
-		
 		var cin = Sys.stdin();
+
+		Lib.print('Server IP: ');
+		var ip = cin.readLine();
+		if (ip == '') ip = '127.0.0.1';
+
+		Lib.println("Opening connection");
+		var sock:Socket = new Socket();
+		sock.connect(new Host(ip), 1234);
+		
 
 		while (true)
 		{
-			sock.write(cin.readLine() + "\n");
-			Sys.sleep(0.1);
+			var msg:String = cin.readLine();
+			if (msg == "/exit")
+			{
+				break;
+			}
+			else
+			{
+				sock.write(msg + "\n");
+				Sys.sleep(0.05);
+			}
 		}
 
 		sock.close();
