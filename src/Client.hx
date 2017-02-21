@@ -1,16 +1,20 @@
 package;
 
 import neko.Lib;
+import neko.vm.Thread;
 import sys.net.Host;
 import sys.net.Socket;
 
 class Client
 {
+	private static var _socket:Socket;
+
 	public static function main()
 	{
 		//test();
 		//one();
-		two();
+		//two();
+		sri();
 	}
 
 
@@ -67,6 +71,34 @@ class Client
                 break;
             }
         }
+	}
+
+
+	public static function threadListen() {
+		while (true) {
+			try {
+				var text = _socket.input.readLine();
+				trace(text + '\n');
+			} catch (z:Dynamic) {
+				trace('Connection lost.\n');
+				return;
+			}
+		}
+	}
+
+	public static function sri()
+	{
+		Lib.println("opening connection");
+		_socket = new Socket();
+		_socket.connect(new Host("localhost"), 1234);
+		Thread.create(threadListen);
+		
+		var cin = Sys.stdin();
+		while (true)
+		{
+			_socket.write(cin.readLine() + "\n");
+			Sys.sleep(0.1);
+		}
 	}
 
 
