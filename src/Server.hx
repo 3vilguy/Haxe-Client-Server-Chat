@@ -3,23 +3,30 @@ package;
 import haxe.io.Bytes;
 import neko.Lib;
 import neko.net.ThreadServer;
+import sys.net.Host;
 import sys.net.Socket;
 
 typedef Client = {
-	var id : Int;
-	var socket : Socket;
+	var id: Int;
+	var socket: Socket;
+}
+
+typedef ClientInfo = {
+	var host: Host;
+	var port: Int;
 }
 
 typedef Message = {
-	var str : String;
+	var str: String;
 }
 
 class Server extends ThreadServer<Client, Message>
 {
 	private static var HOST : String = "localhost";
 	private static var PORT : Int = 1234;
-	
-	private var _clients:Array<Client> = [];
+
+	private var _clientID : Int = 0;
+	private var _clients : Array<Client> = [];
 
 	public static function main()
 	{
@@ -34,27 +41,29 @@ class Server extends ThreadServer<Client, Message>
 			Lib.println(err);
 		}
 	}
-	
+
+
 	override function init() {
 		super.init();
 		Lib.println("ษออออออออออออออออป");
 		Lib.println("บ SERVER STARTED บ");
 		Lib.println("ศออออออออออออออออผ");
 	}
-	
-	// create a Client
+
+
 	override function clientConnected( s : Socket ) : Client
 	{
-		var num = Std.random(100);
-		Lib.println("client " + num + " is " + s.peer());
-		var client:Client = { id: num, socket : s };
+		_clientID++;
+		var clientInfo:ClientInfo = s.peer();
+		Lib.println('Client #$_clientID connected - ${clientInfo.host}:${clientInfo.port}');
+		var client:Client = { id: _clientID, socket: s };
 		_clients.push(client);
 		return client;
 	}
 
 	override function clientDisconnected( c : Client )
 	{
-		Lib.println("client " + Std.string(c.id) + " disconnected");
+		Lib.println('Client #${c.id} disconnected');
 		_clients.remove(c);
 	}
 
@@ -80,6 +89,6 @@ class Server extends ThreadServer<Client, Message>
 
 	override function clientMessage( c : Client, msg : Message )
 	{
-		Lib.println(c.id + " sent: " + msg.str);
+		Lib.println('<${c.id}>${msg.str}');
 	}
 }
