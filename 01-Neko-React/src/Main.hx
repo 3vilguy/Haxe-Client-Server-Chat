@@ -7,7 +7,6 @@ import view.MainView;
 
 class Main 
 {
-	
 	static function main() 
 	{
 		ReactDOM.render(jsx('<MainView/>'), Browser.document.getElementById('app'));
