@@ -1,0 +1,12 @@
+-cmd copy html-template\index.html bin
+
+-cp src
+
+-lib react
+-lib msignal
+
+-D react_global
+-dce full
+
+-js bin/index.js
+-main Main
