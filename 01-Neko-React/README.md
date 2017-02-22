@@ -5,4 +5,5 @@ Trying to make chat-like application using WebSockets. Server would be on Neko a
 
     haxelib install msignal
     haxelib install react
+	haxelib install websocket
     haxe build.hxml

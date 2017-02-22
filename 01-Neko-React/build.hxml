@@ -1,6 +1,13 @@
--cmd copy html-template\index.html bin
-
 -cp src
+
+--each
+
+-lib websocket
+
+-neko bin/server.n
+-main server/Server.hx
+
+--next
 
 -lib react
 -lib msignal
@@ -10,3 +17,5 @@
 
 -js bin/index.js
 -main Main
+
+-cmd copy html-template\index.html bin
