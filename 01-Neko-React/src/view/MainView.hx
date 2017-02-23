@@ -9,6 +9,8 @@ class MainView extends ReactComponent
 	private static var HOST_DEFAULT : String = "127.0.0.1";
 	private static var PORT : Int = 1234;
 
+	private var _ws : WebSocket;
+
 	public function new(props:Dynamic) 
 	{
 		super(props);
@@ -23,27 +25,48 @@ class MainView extends ReactComponent
 	{
 		return jsx('
 			<div>
-				OH HAI!
-			</div>
+				<input ref="input" placeholder="Type text here" onKeyPress=$onKeyPress />
+				<button onClick=$sendMessage>Send</button>
+			<div/>
 		');
 	}
 
 
 	function setupSocketConnection():Void
 	{
-		var ws:WebSocket = new WebSocket('ws://$HOST_DEFAULT:$PORT'); // use native js WebSocket class (js.html.WebSocket in haxe)
-		ws.onopen = function()
+		_ws = new WebSocket('ws://$HOST_DEFAULT:$PORT');
+		_ws.onopen = function()
 		{
 			trace("CONNECT");
-			ws.send("TestString");
+			_ws.send("TestString");
 		};
-		ws.onmessage = function(e)
+		_ws.onmessage = function(e)
 		{
 			trace("RECEIVE: " + e.data);
 		};
-		ws.onclose = function()
+		_ws.onclose = function()
 		{
 			trace("DISCONNECT");
 		};
+	}
+
+	function onKeyPress(e:Dynamic)
+	{
+		if (e.key == 'Enter')
+		{
+			sendMessage();
+		}
+	}
+
+
+	function sendMessage()
+	{
+		var text:String = refs.input.value;
+		if (text.length > 0) 
+		{
+			trace(text);
+			_ws.send(text);
+			refs.input.value = "";
+		}
 	}
 }
