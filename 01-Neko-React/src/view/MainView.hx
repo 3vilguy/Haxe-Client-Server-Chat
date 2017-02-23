@@ -4,7 +4,7 @@ import js.html.WebSocket;
 import react.ReactComponent;
 import react.ReactMacro.jsx;
 
-class MainView extends ReactComponent
+class MainView extends ReactComponentOfState<MainViewState>
 {
 	private static var HOST_DEFAULT : String = "127.0.0.1";
 	private static var PORT : Int = 1234;
@@ -14,6 +14,8 @@ class MainView extends ReactComponent
 	public function new(props:Dynamic) 
 	{
 		super(props);
+		
+		state = { messages: [] };
 	}
 
 	override public function componentDidMount():Void 
@@ -25,10 +27,27 @@ class MainView extends ReactComponent
 	{
 		return jsx('
 			<div>
+				<div>
+					${createChatMessages()}
+				</div>
 				<input ref="input" placeholder="Type text here" onKeyPress=$onKeyPress />
 				<button onClick=$sendMessage>Send</button>
 			<div/>
 		');
+	}
+	
+	function createChatMessages():Array<ReactElement>
+	{
+		var messages:Array<String> = state.messages;
+		if (messages.length > 0)
+		{
+			for (msg in messages)
+			{
+				trace(msg);
+			}
+			return [for (msg in messages) jsx('<div>$msg<div />')];
+		}
+		return null;
 	}
 
 
@@ -38,11 +57,13 @@ class MainView extends ReactComponent
 		_ws.onopen = function()
 		{
 			trace("CONNECT");
-			_ws.send("TestString");
 		};
 		_ws.onmessage = function(e)
 		{
 			trace("RECEIVE: " + e.data);
+			var messages:Array<String> = state.messages;
+			messages.push(e.data);
+			setState({ messages: messages });
 		};
 		_ws.onclose = function()
 		{
@@ -69,4 +90,8 @@ class MainView extends ReactComponent
 			refs.input.value = "";
 		}
 	}
+}
+
+typedef MainViewState = {
+	?messages : Array<String>
 }
