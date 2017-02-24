@@ -13,7 +13,7 @@ class ChatView extends ReactComponentOfProps<ChatViewProps>
 	override public function render():ReactElement 
 	{
 		return jsx('
-			<div style={{margin: "5px 5px 0", padding: 5, backgroundColor: "#CCCCCC"}} >
+			<div style={{margin: "5px 5px 0", display: "flex", flexDirection: "column", padding: 5, flexGrow: 1, backgroundColor: "#CCCCCC", justifyContent: "flex-end"}}>
 				${createChatMessages()}
 			<div/>
 		');
