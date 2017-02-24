@@ -26,10 +26,12 @@ class MainView extends ReactComponentOfState<MainViewState>
 	override public function render():ReactElement 
 	{
 		return jsx('
-			<div>
+			<div style={{height: "100vh", display: "flex", flexDirection: "column", justifyContent: "flex-end", backgroundColor: "#DDDDDD"}}>
 				<$ChatView messages=${state.messages} />
-				<input ref="input" placeholder="Type text here" onKeyPress=$onKeyPress />
-				<button onClick=$sendMessage>Send</button>
+				<div style = {{padding: 5, display: "flex"}}>
+					<input ref="input" placeholder="Type text here" onKeyPress=$onKeyPress style={{flexGrow: 2}} />
+					<button onClick=$sendMessage>Send</button>
+				</div>
 			<div/>
 		');
 	}
