@@ -27,31 +27,15 @@ class MainView extends ReactComponentOfState<MainViewState>
 	{
 		return jsx('
 			<div>
-				<div>
-					${createChatMessages()}
-				</div>
+				<$ChatView messages=${state.messages} />
 				<input ref="input" placeholder="Type text here" onKeyPress=$onKeyPress />
 				<button onClick=$sendMessage>Send</button>
 			<div/>
 		');
 	}
-	
-	function createChatMessages():Array<ReactElement>
-	{
-		var messages:Array<String> = state.messages;
-		if (messages.length > 0)
-		{
-			for (msg in messages)
-			{
-				trace(msg);
-			}
-			return [for (msg in messages) jsx('<div>$msg<div />')];
-		}
-		return null;
-	}
 
 
-	function setupSocketConnection():Void
+	private function setupSocketConnection():Void
 	{
 		_ws = new WebSocket('ws://$HOST_DEFAULT:$PORT');
 		_ws.onopen = function()
@@ -71,7 +55,7 @@ class MainView extends ReactComponentOfState<MainViewState>
 		};
 	}
 
-	function onKeyPress(e:Dynamic)
+	private function onKeyPress(e:Dynamic)
 	{
 		if (e.key == 'Enter')
 		{
@@ -80,7 +64,7 @@ class MainView extends ReactComponentOfState<MainViewState>
 	}
 
 
-	function sendMessage()
+	private function sendMessage()
 	{
 		var text:String = refs.input.value;
 		if (text.length > 0) 
