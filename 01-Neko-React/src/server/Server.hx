@@ -1,5 +1,6 @@
 package server;
 
+import neko.Lib;
 import neko.net.WebSocketServerLoop;
 import neko.net.WebSocketServerLoop.ClientData;
 import sys.net.Host;
@@ -7,7 +8,7 @@ import sys.net.Socket;
 
 class Server 
 {
-	private static var HOST : String = "127.0.0.1";
+	private static var HOST_DEFAULT : String = "127.0.0.1";
 	private static var PORT : Int = 1234;
 
 	private var _serverLoop:WebSocketServerLoop<ClientData>;
@@ -19,11 +20,16 @@ class Server
 
 	public function new() 
 	{
+		var cin = Sys.stdin();
+		Lib.print('Server IP: ');
+		var ip = cin.readLine();
+		if (ip == '') ip = HOST_DEFAULT;
+
 		_serverLoop = new WebSocketServerLoop<ClientData>( function(socket:Socket) return new ClientData(socket) );
 		_serverLoop.processIncomingMessage = handleIncomingMessage;
 		try
 		{
-			_serverLoop.run(new Host(HOST), PORT);
+			_serverLoop.run(new Host(ip), PORT);
 		}
 		catch (err:Dynamic)
 		{
@@ -34,7 +40,7 @@ class Server
 
 	private function handleIncomingMessage( connection : ClientData, message : String )
 	{
-		trace("Incoming: " + message);
+		Lib.println("Incoming: " + message);
 		broadcastMessage(message);
 	}
 	
