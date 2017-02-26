@@ -50,9 +50,9 @@ class Server extends ThreadServer<Client, Message>
 
 	override function init() {
 		super.init();
-		Lib.println("ษออออออออออออออออป");
-		Lib.println("บ SERVER STARTED บ");
-		Lib.println("ศออออออออออออออออผ");
+		Lib.println("โ•”โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•—");
+		Lib.println("โ•‘ SERVER STARTED โ•‘");
+		Lib.println("โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•");
 	}
 
 
