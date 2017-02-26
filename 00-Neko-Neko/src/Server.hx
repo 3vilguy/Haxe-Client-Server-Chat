@@ -22,7 +22,7 @@ typedef Message = {
 
 class Server extends ThreadServer<Client, Message>
 {
-	private static var HOST : String = "127.0.0.1";
+	private static var HOST_DEFAULT : String = "127.0.0.1";
 	private static var PORT : Int = 1234;
 
 	private var _clientID : Int = 0;
@@ -30,10 +30,15 @@ class Server extends ThreadServer<Client, Message>
 
 	public static function main()
 	{
+		var cin = Sys.stdin();
+		Lib.print('Server IP: ');
+		var ip = cin.readLine();
+		if (ip == '') ip = HOST_DEFAULT;
+
 		var server = new Server();
 		try
 		{
-			server.run(HOST, PORT);
+			server.run(ip, PORT);
 		}
 		catch (err:Dynamic)
 		{
