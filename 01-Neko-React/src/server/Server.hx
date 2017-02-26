@@ -21,7 +21,15 @@ class Server
 	{
 		_serverLoop = new WebSocketServerLoop<ClientData>( function(socket:Socket) return new ClientData(socket) );
 		_serverLoop.processIncomingMessage = handleIncomingMessage;
-		_serverLoop.run(new Host(HOST), PORT);
+		try
+		{
+			_serverLoop.run(new Host(HOST), PORT);
+		}
+		catch (err:Dynamic)
+		{
+			Lib.println("Something went wrong:");
+			Lib.println(err);
+		}
 	}
 
 	private function handleIncomingMessage( connection : ClientData, message : String )
