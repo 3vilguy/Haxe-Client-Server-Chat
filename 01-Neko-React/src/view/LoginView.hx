@@ -28,6 +28,15 @@ class LoginView extends ReactComponentOfProps<LoginViewProps>
 					</div>
 				</div>
 
+				<div style={{marginBottom: 20}}>
+					<div>
+						Name:
+					</div>
+					<div>
+						<input ref="name" defaultValue=${Date.now().getTime()} />
+					</div>
+				</div>
+
 				<div>
 					<button disabled=${!state.btnEnabled} onClick=$handleOnClick><b>Connect!</b></button>
 				</div>
@@ -38,10 +47,10 @@ class LoginView extends ReactComponentOfProps<LoginViewProps>
 	private function handleOnClick()
 	{
 		setState({ btnEnabled: false });
-		props.connectHandler(refs.address.value);
+		props.connectHandler(refs.address.value, refs.name.value);
 	}
 }
 
 typedef LoginViewProps = {
-	?connectHandler : String -> Void
+	?connectHandler : String -> String -> Void
 }

@@ -17,6 +17,7 @@ class MainView extends ReactComponentOfState<MainViewState>
 		
 		state = {
 			isConnected: false,
+			name: "",
 			messages: []
 		};
 	}
@@ -46,13 +47,17 @@ class MainView extends ReactComponentOfState<MainViewState>
 	}
 
 
-	private function connectToServer( host : String ):Void
+	private function connectToServer( host : String, name : String ):Void
 	{
 		_ws = new WebSocket('ws://$host:$PORT');
 		_ws.onopen = function()
 		{
 			trace("CONNECT");
-			setState({ isConnected: true });
+			setState({
+				isConnected: true,
+				name: name
+			});
+			_ws.send('$name has joined.');
 		};
 		_ws.onmessage = function(e)
 		{
@@ -84,11 +89,12 @@ class MainView extends ReactComponentOfState<MainViewState>
 	private function sendMessage( msg : String ):Void
 	{
 		trace('Sending => $msg');
-		_ws.send(msg);
+		_ws.send('<${state.name}>$msg');
 	}
 }
 
 typedef MainViewState = {
 	?isConnected : Bool,
+	?name : String,
 	?messages : Array<String>,
 }
