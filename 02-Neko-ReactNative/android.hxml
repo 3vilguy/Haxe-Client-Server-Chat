@@ -1,0 +1,4 @@
+common.hxml
+
+-js bin/generated/android/main.js
+-D android

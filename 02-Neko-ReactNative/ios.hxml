@@ -1,0 +1,4 @@
+common.hxml
+
+-js bin/generated/ios/main.js
+-D ios
