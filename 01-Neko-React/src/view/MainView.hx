@@ -42,7 +42,7 @@ class MainView extends ReactComponentOfState<MainViewState>
 					<$ChatView messages=${state.messages} />
 					<div style = {{padding: 5, display: "flex"}}>
 						<input ref="input" placeholder="Type text here" onKeyPress=$onKeyPress style={{flexGrow: 2}} />
-						<button onClick=$sendMessage>Send</button>
+						<button onClick=$sendTextFromInputField>Send</button>
 					</div>
 				<div/>
 			');
@@ -74,7 +74,7 @@ class MainView extends ReactComponentOfState<MainViewState>
 			trace("DISCONNECT");
 		};
 	}
-	
+
 	private function sayHi(name : String):Void
 	{
 		var introMsg:Message = { type: MsgConsts.INTRODUCTION_MSG, name: name };
@@ -85,13 +85,19 @@ class MainView extends ReactComponentOfState<MainViewState>
 	{
 		if (e.key == 'Enter')
 		{
-			var text:String = refs.input.value;
-			if (text.length > 0) 
-			{
-				var txtMsg:Message = { type: MsgConsts.TEXT_MSG, text: text };
-				sendMessage( Json.stringify(txtMsg) );
-				refs.input.value = "";
-			}
+			sendTextFromInputField();
+		}
+	}
+
+	private function sendTextFromInputField():Void
+	{
+		var text:String = refs.input.value;
+		if (text.length > 0) 
+		{
+			trace('Text => $text');
+			var txtMsg:Message = { type: MsgConsts.TEXT_MSG, text: text };
+			sendMessage( Json.stringify(txtMsg) );
+			refs.input.value = "";
 		}
 	}
 
