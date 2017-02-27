@@ -1,8 +1,11 @@
 package view;
 
+import haxe.Json;
 import js.html.WebSocket;
 import react.ReactComponent;
 import react.ReactMacro.jsx;
+import shared.Message;
+import shared.MsgConsts;
 
 class MainView extends ReactComponentOfState<MainViewState>
 {
@@ -57,7 +60,7 @@ class MainView extends ReactComponentOfState<MainViewState>
 				isConnected: true,
 				name: name
 			});
-			_ws.send('$name has joined.');
+			sayHi(name);
 		};
 		_ws.onmessage = function(e)
 		{
@@ -71,6 +74,12 @@ class MainView extends ReactComponentOfState<MainViewState>
 			trace("DISCONNECT");
 		};
 	}
+	
+	private function sayHi(name : String):Void
+	{
+		var introMsg:Message = { type: MsgConsts.INTRODUCTION_MSG, name: name };
+		sendMessage( Json.stringify(introMsg) );
+	}
 
 	private function onKeyPress( e : Dynamic ):Void
 	{
@@ -79,7 +88,8 @@ class MainView extends ReactComponentOfState<MainViewState>
 			var text:String = refs.input.value;
 			if (text.length > 0) 
 			{
-				sendMessage(text);
+				var txtMsg:Message = { type: MsgConsts.TEXT_MSG, text: text };
+				sendMessage( Json.stringify(txtMsg) );
 				refs.input.value = "";
 			}
 		}
@@ -89,7 +99,7 @@ class MainView extends ReactComponentOfState<MainViewState>
 	private function sendMessage( msg : String ):Void
 	{
 		trace('Sending => $msg');
-		_ws.send('<${state.name}>$msg');
+		_ws.send(msg);
 	}
 }
 
