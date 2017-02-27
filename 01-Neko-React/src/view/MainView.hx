@@ -67,24 +67,24 @@ class MainView extends ReactComponentOfState<MainViewState>
 		};
 	}
 
-	private function onKeyPress(e:Dynamic)
+	private function onKeyPress( e : Dynamic ):Void
 	{
 		if (e.key == 'Enter')
 		{
-			sendMessage();
+			var text:String = refs.input.value;
+			if (text.length > 0) 
+			{
+				sendMessage(text);
+				refs.input.value = "";
+			}
 		}
 	}
 
 
-	private function sendMessage()
+	private function sendMessage( msg : String ):Void
 	{
-		var text:String = refs.input.value;
-		if (text.length > 0) 
-		{
-			trace(text);
-			_ws.send(text);
-			refs.input.value = "";
-		}
+		trace('Sending => $msg');
+		_ws.send(msg);
 	}
 }
 
