@@ -9,6 +9,7 @@ import react.native.component.*;
 import shared.Message;
 import shared.MsgConsts;
 import view.LoginView;
+import view.common.Button;
 
 class MainView extends ReactComponent
 {
@@ -21,17 +22,41 @@ class MainView extends ReactComponent
 	{
 		super(props);
 		state = {
+			isConnected: false,
 			name: "",
-			messages: []
+			messages: [],
+			message: ""
 		};
 	}
 	
 	override function render()
 	{
-		// Show login component
-		return jsx('
-			<$LoginView connectHandler=${connectToServer} />
-		');
+		if (state.isConnected == false)
+		{
+			// Show login component
+			return jsx('
+				<$LoginView connectHandler=${connectToServer} />
+			');
+		}
+		else
+		{
+			// Show chat component
+			return jsx('
+				<View>
+					<View>
+						<TextInput
+							style={styles.inputText}
+							onChangeText=$onMessageChange
+							value={state.message}
+						/>
+						<Button
+							text="Send"
+							onPress=$sendTextFromInputField
+						/>
+					</View>
+				</View>
+			');
+		}
 	}
 
 
@@ -64,6 +89,24 @@ class MainView extends ReactComponent
 	{
 		var introMsg:Message = { type: MsgConsts.INTRODUCTION_MSG, name: name };
 		sendMessage( Json.stringify(introMsg) );
+	}
+
+	private function onMessageChange(text:String)
+	{
+		setState({ message: text });
+	}
+
+
+	private function sendTextFromInputField():Void
+	{
+		var text:String = state.message;
+		if (text.length > 0) 
+		{
+			trace('Text => $text');
+			var txtMsg:Message = { type: MsgConsts.TEXT_MSG, text: text };
+			sendMessage( Json.stringify(txtMsg) );
+			setState({ message: "" });
+		}
 	}
 
 

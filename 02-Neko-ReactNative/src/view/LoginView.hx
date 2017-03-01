@@ -50,8 +50,7 @@ class LoginView extends ReactComponent
 					text="Connect!"
 					disabled=${!state.btnEnabled}
 					onPress=$handleOnClick
-				>
-				</Button>
+				/>
 			</View>
 		');
 	}
