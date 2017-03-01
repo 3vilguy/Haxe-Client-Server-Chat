@@ -17,7 +17,6 @@ class MainView extends ReactComponent
 
 	static var styles = Main.styles;
 
-
 	public function new(props)
 	{
 		super(props);
@@ -27,7 +26,8 @@ class MainView extends ReactComponent
 		};
 	}
 	
-	override function render() {
+	override function render()
+	{
 		// Show login component
 		return jsx('
 			<$LoginView connectHandler=${connectToServer} />

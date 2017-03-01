@@ -5,7 +5,8 @@ import react.ReactMacro.jsx;
 import react.native.api.*;
 import react.native.component.*;
 
-class LoginView extends ReactComponent {
+class LoginView extends ReactComponent
+{
 	private static var HOST_DEFAULT : String = "127.0.0.1";
 	static var styles = Main.styles;
 	
@@ -20,7 +21,8 @@ class LoginView extends ReactComponent {
 		};
 	}
 
-	override function render() {
+	override function render()
+	{
 		return jsx('
 			<View style={styles.container}>
 				<Text>

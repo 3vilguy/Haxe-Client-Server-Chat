@@ -6,8 +6,8 @@ import react.native.api.*;
 import react.native.component.*;
 import view.MainView;
 
-class Main {
-	
+class Main
+{
 	public static var styles = StyleSheet.create({
 		container: {
 			flex: 1,
@@ -40,8 +40,10 @@ class Main {
 }
 
 @:expose('App')
-class App extends ReactComponent {
-	override function render() {
+class App extends ReactComponent
+{
+	override function render()
+	{
 		// Show login component
 		return jsx('
 			<$MainView />
