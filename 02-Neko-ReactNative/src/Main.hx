@@ -15,16 +15,6 @@ class Main
 			alignItems: 'center',
 			backgroundColor: '#F5FCFF',
 		},
-		text: {
-			fontSize: 20,
-			textAlign: 'center',
-			margin: 10,
-		},
-		textBigger: {
-			fontSize: 30,
-			textAlign: 'center',
-			margin: 20,
-		},
 		inputText: {
 			height: 40,
 			borderColor: 'gray',
