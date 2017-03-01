@@ -12,8 +12,7 @@ class Main
 		container: {
 			flex: 1,
 			justifyContent: 'center',
-			alignItems: 'center',
-			backgroundColor: '#F5FCFF',
+			alignItems: 'center'
 		},
 		inputText: {
 			height: 40,

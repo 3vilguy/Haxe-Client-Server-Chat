@@ -44,6 +44,7 @@ class MainView extends ReactComponent
 			return jsx('
 				<View>
 					<View>
+					<$ChatView messages=${state.messages} />
 						<TextInput
 							style={styles.inputText}
 							onChangeText=$onMessageChange
