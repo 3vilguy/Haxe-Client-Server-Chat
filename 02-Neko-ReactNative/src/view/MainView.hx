@@ -42,11 +42,11 @@ class MainView extends ReactComponent
 		{
 			// Show chat component
 			return jsx('
-				<View>
-					<View>
+				<View style={{flex: 1, marginTop: 20, justifyContent: "flex-end"}}>
 					<$ChatView messages=${state.messages} />
+					<View style={{flexDirection: "row"}}>
 						<TextInput
-							style={styles.inputText}
+							style={[styles.inputText, {flex: 1}]}
 							onChangeText=$onMessageChange
 							value={state.message}
 						/>
