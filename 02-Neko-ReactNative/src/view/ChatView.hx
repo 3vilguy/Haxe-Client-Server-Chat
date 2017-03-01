@@ -15,9 +15,9 @@ class ChatView extends ReactComponentOfProps<ChatViewProps>
 	override public function render():ReactElement 
 	{
 		return jsx('
-			<View>
+			<ScrollView contentContainerStyle={{flex: 1, justifyContent: "flex-end"}}>
 				${createChatMessages()}
-			</View>
+			</ScrollView>
 		');
 	}
 	
