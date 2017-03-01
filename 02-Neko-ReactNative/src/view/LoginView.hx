@@ -4,6 +4,7 @@ import react.ReactComponent;
 import react.ReactMacro.jsx;
 import react.native.api.*;
 import react.native.component.*;
+import view.common.Button;
 
 class LoginView extends ReactComponent
 {
@@ -45,11 +46,12 @@ class LoginView extends ReactComponent
 					value={this.state.name}
 				/>
 
-				<TouchableHighlight disabled=${!state.btnEnabled} onPress=$handleOnClick>
-					<Text style={styles.textBigger}>
-						Connect!
-					</Text>
-				</TouchableHighlight>
+				<Button
+					text="Connect!"
+					disabled=${!state.btnEnabled}
+					onPress=$handleOnClick
+				>
+				</Button>
 			</View>
 		');
 	}
